@@ -111,7 +111,6 @@ class App extends React.Component {
                     onError={this.handleOnError}
                   >
                     <span>Drop CSV file here or click to upload.</span>
-                    {/* <button className="upload-btn">Upload as CSV</button> */}
                   </CSVReader>
                 </div>
                 <button

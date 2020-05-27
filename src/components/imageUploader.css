@@ -16,17 +16,26 @@
   width: 100%;
   height: 300px;
 }
-.empty-add-btn {
+.hidden-btn {
   display: none;
 }
 .add-btn {
   width: 30%;
   padding: 10px 0;
-  margin: 0 35%;
+  float: left;
   background-color: #008cba;
   color: #fff;
   border: none;
 }
-.add-btn:hover {
+.delete-btn {
+  width: 30%;
+  padding: 10px 0;
+  float: right;
+  background-color: #d11a2a;
+  color: #fff;
+  border: none;
+}
+.add-btn:hover,
+.delete-btn:hover {
   opacity: 0.9;
 }

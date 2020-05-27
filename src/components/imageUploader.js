@@ -10,6 +10,7 @@ export default class ImageUpload extends React.Component {
       preview: null,
     };
     this.addImage = this.addImage.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
   addImage() {
@@ -26,6 +27,9 @@ export default class ImageUpload extends React.Component {
         () => alert("Image added successfully!")
       );
     }
+  }
+  deleteImage() {
+    this.setState({ preview: null });
   }
 
   handleChange(event) {
@@ -52,11 +56,17 @@ export default class ImageUpload extends React.Component {
           <span>
             <button
               onClick={this.addImage}
-              className={
-                this.state.preview == null ? "empty-add-btn" : "add-btn"
-              }
+              className={this.state.preview == null ? "hidden-btn" : "add-btn"}
             >
               Add Image
+            </button>
+            <button
+              onClick={this.deleteImage}
+              className={
+                this.state.preview == null ? "hidden-btn" : "delete-btn"
+              }
+            >
+              Delete
             </button>
           </span>
         </div>

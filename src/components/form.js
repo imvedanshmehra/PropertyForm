@@ -81,6 +81,11 @@ export default class Form extends Component {
   }
 
   render() {
+    const isEnabled =
+      this.state.error.addressError === "" &&
+      this.state.error.bathroomError === "" &&
+      this.state.error.bedroomError === "";
+
     return (
       <Fragment>
         <div className="form-container">
@@ -118,7 +123,11 @@ export default class Form extends Component {
             placeholder="description of the property"
             className="description-value"
           />
-          <button className="submit-btn" onClick={this.props.submitBtn}>
+          <button
+            className="submit-btn"
+            disabled={!isEnabled}
+            onClick={this.props.submitBtn}
+          >
             Submit
           </button>
         </div>
