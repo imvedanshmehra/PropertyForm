@@ -1,0 +1,45 @@
+.form-container {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.input-label {
+  text-align: center;
+  font-size: larger;
+  font-weight: lighter;
+  color: blue;
+  margin: 5px 0;
+}
+.input-value {
+  width: 100%;
+  padding: 10px 0;
+  font-size: larger;
+}
+.description-value {
+  width: 100%;
+  padding: 10px 0;
+  font-size: larger;
+  height: auto;
+}
+.error-message {
+  font-size: smaller;
+  color: red;
+}
+.submit-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 15px 30px;
+  background-color: #4caf50;
+  font-size: larger;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+.submit-btn:hover {
+  opacity: 0.9;
+}
+.submit-btn:disabled {
+  background-color: red;
+  cursor: not-allowed;
+}

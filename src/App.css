@@ -1,38 +1,81 @@
-.App {
+.header {
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.form {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  background-color: #f1f1f1;
+  height: 500px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.stepper {
+  padding: 15px;
+  border-radius: 50%;
+  border: none;
+  background-color: #008cba;
+  color: #fff;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.stepper-active {
+  padding: 15px;
+  border-radius: 50%;
+  border: none;
+  background-color: #4caf50;
+  color: #fff;
 }
-
-.App-link {
-  color: #61dafb;
+.stepper:hover {
+  opacity: 0.9;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.stepper:focus,
+.stepper-active:focus {
+  outline: none;
+}
+.btn-container {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 35% 0;
+}
+.upload-btn {
+  width: 100%;
+  margin: 10px 0;
+  padding: 15px 0;
+  font-size: larger;
+  background-color: #008cba;
+  color: #fff;
+  border: none;
+  transition-duration: 0.4s;
+  border-radius: 5px;
+}
+.upload-btn:hover {
+  transition-duration: 0.4s;
+  background-color: white;
+  color: black;
+  border: 2px solid #008cba;
+}
+.next-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 15px 30px;
+  background-color: #4caf50;
+  font-size: larger;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+.prev-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  padding: 15px 30px;
+  background-color: #4caf50;
+  font-size: larger;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+.next-btn:hover,
+.prev-btn:hover {
+  opacity: 0.9;
 }

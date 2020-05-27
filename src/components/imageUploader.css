@@ -1,0 +1,32 @@
+.counter {
+  padding: 5px;
+  text-align: center;
+}
+.input-label {
+  display: block;
+}
+.prievew-container {
+  width: 350px;
+  margin: 10px auto;
+}
+.empty-image {
+  display: none;
+}
+.preview-img {
+  width: 100%;
+  height: 300px;
+}
+.empty-add-btn {
+  display: none;
+}
+.add-btn {
+  width: 30%;
+  padding: 10px 0;
+  margin: 0 35%;
+  background-color: #008cba;
+  color: #fff;
+  border: none;
+}
+.add-btn:hover {
+  opacity: 0.9;
+}
