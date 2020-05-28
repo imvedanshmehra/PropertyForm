@@ -22,15 +22,15 @@
 .add-btn {
   width: 30%;
   padding: 10px 0;
-  float: left;
+  float: right;
   background-color: #008cba;
-  color: #fff;
+  color: rgb(221, 214, 214);
   border: none;
 }
 .delete-btn {
   width: 30%;
   padding: 10px 0;
-  float: right;
+  float: left;
   background-color: #d11a2a;
   color: #fff;
   border: none;

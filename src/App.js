@@ -51,45 +51,36 @@ class App extends React.Component {
         <h2 className="header">Property form</h2>
         <MDBStepper form>
           <MDBStep form>
-            <a href="#formstep1" onClick={this.swapFormActive(1)(1)}>
-              <button
-                className={
-                  this.state.formActivePanel1 === 1
-                    ? "stepper-active"
-                    : "stepper"
-                }
-              >
-                1
-              </button>
-            </a>
+            <button
+              className={
+                this.state.formActivePanel1 === 1 ? "stepper-active" : "stepper"
+              }
+            >
+              1
+            </button>
+
             <p>Step1</p>
           </MDBStep>
           <MDBStep form>
-            <a href="#formstep2" onClick={this.swapFormActive(1)(2)}>
-              <button
-                className={
-                  this.state.formActivePanel1 === 2
-                    ? "stepper-active"
-                    : "stepper"
-                }
-              >
-                2
-              </button>
-            </a>
+            <button
+              className={
+                this.state.formActivePanel1 === 2 ? "stepper-active" : "stepper"
+              }
+            >
+              2
+            </button>
+
             <p>Step 2</p>
           </MDBStep>
           <MDBStep form>
-            <a href="#formstep3" onClick={this.swapFormActive(1)(3)}>
-              <button
-                className={
-                  this.state.formActivePanel1 === 3
-                    ? "stepper-active"
-                    : "stepper"
-                }
-              >
-                3
-              </button>
-            </a>
+            <button
+              className={
+                this.state.formActivePanel1 === 3 ? "stepper-active" : "stepper"
+              }
+            >
+              3
+            </button>
+
             <p>Step 3</p>
           </MDBStep>
         </MDBStepper>
@@ -110,15 +101,9 @@ class App extends React.Component {
                     onFileLoad={this.handleOnFileLoad}
                     onError={this.handleOnError}
                   >
-                    <span>Drop CSV file here or click to upload.</span>
+                    <span>Uplaod CSV file</span>
                   </CSVReader>
                 </div>
-                <button
-                  onClick={this.handleNextPrevClick(1)(2)}
-                  className="next-btn"
-                >
-                  Next
-                </button>
               </div>
             )}
             {this.state.formActivePanel1 === 2 && (

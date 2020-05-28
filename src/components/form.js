@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import PlacesAutocomplete from "react-places-autocomplete";
 import "./form.css";
 
 export default class Form extends Component {
@@ -16,24 +17,26 @@ export default class Form extends Component {
       },
     };
     this.handleAddressChange = this.handleAddressChange.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
     this.handleBedroomChange = this.handleBedroomChange.bind(this);
     this.handleBathroomChange = this.handleBathroomChange.bind(this);
   }
 
-  handleAddressChange(e) {
-    const target = e.target;
-
-    if (!target.value) {
+  handleAddressChange(address) {
+    if (address == "") {
       this.setState({
         error: { ...this.state.error, addressError: "cannot be empty" },
         address: "",
       });
     } else {
       this.setState({
-        address: target.value,
+        address,
         error: { ...this.state.error, addressError: "" },
       });
     }
+  }
+  handleSelect(address) {
+    this.setState({ address }, () => console.log(this.state.address));
   }
 
   handleBedroomChange(e) {
@@ -86,9 +89,9 @@ export default class Form extends Component {
 
   render() {
     const isEnabled =
-      this.state.address != "" &&
-      this.state.bedroom != "" &&
-      this.state.bathroom != "" &&
+      this.state.address !== "" &&
+      this.state.bedroom !== "" &&
+      this.state.bathroom !== "" &&
       this.state.error.addressError === "" &&
       this.state.error.bathroomError === "" &&
       this.state.error.bedroomError === "";
@@ -97,12 +100,44 @@ export default class Form extends Component {
       <Fragment>
         <div className="form-container">
           <h5 className="input-label">Address</h5>
-          <input
-            type="text"
-            className="input-value"
+          <PlacesAutocomplete
             value={this.state.address}
             onChange={this.handleAddressChange}
-          />
+            onSelect={this.handleSelect}
+          >
+            {({
+              getInputProps,
+              suggestions,
+              getSuggestionItemProps,
+              loading,
+            }) => (
+              <div>
+                <input
+                  {...getInputProps({
+                    placeholder: "Search Places ...",
+                    className: "input-value",
+                  })}
+                />
+                <div className="autocomplete-dropdown-container">
+                  {loading && <div>Loading...</div>}
+                  {suggestions.map((suggestion) => {
+                    const className = suggestion.active
+                      ? "suggestion-active"
+                      : "suggestion";
+
+                    return (
+                      <div
+                        {...getSuggestionItemProps(suggestion, { className })}
+                      >
+                        <span>{suggestion.description}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </PlacesAutocomplete>
+
           <div className="error-message">{this.state.error.addressError}</div>
           <br />
           <h5 className="input-label">Bedroom</h5>

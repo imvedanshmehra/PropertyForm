@@ -15,6 +15,16 @@
   padding: 5px 0;
   font-size: 17px;
 }
+.suggestion {
+  font-size: smaller;
+  cursor: pointer;
+}
+.suggestion-active {
+  background-color: #008cba;
+  color: #fff;
+  font-size: smaller;
+  cursor: pointer;
+}
 .description-value {
   width: 100%;
   padding: 10px 0;
