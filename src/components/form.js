@@ -5,11 +5,15 @@ export default class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: "gkp",
+      address: "",
       bedroom: "",
       bathroom: "",
       description: "",
-      error: { addressError: "", bedroomError: "", bathroomError: "" },
+      error: {
+        addressError: "",
+        bedroomError: "",
+        bathroomError: "",
+      },
     };
     this.handleAddressChange = this.handleAddressChange.bind(this);
     this.handleBedroomChange = this.handleBedroomChange.bind(this);
@@ -82,6 +86,9 @@ export default class Form extends Component {
 
   render() {
     const isEnabled =
+      this.state.address != "" &&
+      this.state.bedroom != "" &&
+      this.state.bathroom != "" &&
       this.state.error.addressError === "" &&
       this.state.error.bathroomError === "" &&
       this.state.error.bedroomError === "";
