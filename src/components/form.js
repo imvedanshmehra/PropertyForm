@@ -1,15 +1,11 @@
 import React, { Component, Fragment } from "react";
 import PlacesAutocomplete from "react-places-autocomplete";
-import "./form.css";
+import { InputContext } from "./inputContext";
 
 export default class Form extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      address: "",
-      bedroom: "",
-      bathroom: "",
-      description: "",
       error: {
         addressError: "",
         bedroomError: "",
@@ -17,26 +13,22 @@ export default class Form extends Component {
       },
     };
     this.handleAddressChange = this.handleAddressChange.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
     this.handleBedroomChange = this.handleBedroomChange.bind(this);
     this.handleBathroomChange = this.handleBathroomChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
   }
-
   handleAddressChange(address) {
-    if (address == "") {
+    if (address === "") {
       this.setState({
         error: { ...this.state.error, addressError: "cannot be empty" },
-        address: "",
       });
+      this.context.handleAddressChange({ address: "" });
     } else {
-      this.setState({
+      this.context.handleAddressChange({
         address,
-        error: { ...this.state.error, addressError: "" },
       });
+      this.setState({ error: { ...this.state.error, addressError: "" } });
     }
-  }
-  handleSelect(address) {
-    this.setState({ address }, () => console.log(this.state.address));
   }
 
   handleBedroomChange(e) {
@@ -46,6 +38,7 @@ export default class Form extends Component {
       this.setState({
         error: { ...this.state.error, bedroomError: "cannot be empty" },
       });
+      this.context.handleChange({ bedroom: "" });
     } else if (target.value > 10) {
       this.setState({
         error: {
@@ -53,18 +46,17 @@ export default class Form extends Component {
           bedroomError: "cannot be greater than 10",
         },
       });
+      this.context.handleChange({ bedroom: target.value });
     } else if (target.value < 1) {
       this.setState({
         error: { ...this.state.error, bedroomError: "cannot be less than 1" },
       });
+      this.context.handleChange({ bedroom: e.target.value });
     } else {
-      this.setState({
-        bedroom: e.target.value,
-        error: { ...this.state.error, bedroomError: "" },
-      });
+      this.context.handleChange({ bedroom: target.value });
+      this.setState({ error: { ...this.state.error, bedroomError: "" } });
     }
   }
-
   handleBathroomChange(e) {
     const target = e.target;
     if (!target.value) {
@@ -80,94 +72,109 @@ export default class Form extends Component {
         error: { ...this.state.error, bathroomError: "cannot be less than 1" },
       });
     } else {
-      this.setState({
-        bathroom: e.target.value,
-        error: { ...this.state.error, bathroomError: "" },
-      });
+      this.context.handleChange({ bathroom: target.value });
+      this.setState({ error: { ...this.state.error, bathroomError: "" } });
     }
+    this.context.handleChange({ bathroom: target.value });
+  }
+
+  handleDescriptionChange(e) {
+    this.context.handleChange({ description: e.target.value });
   }
 
   render() {
     const isEnabled =
-      this.state.address !== "" &&
-      this.state.bedroom !== "" &&
-      this.state.bathroom !== "" &&
+      this.context.address !== "" &&
+      this.context.bedroom !== "" &&
+      this.context.bathroom !== "" &&
       this.state.error.addressError === "" &&
-      this.state.error.bathroomError === "" &&
-      this.state.error.bedroomError === "";
+      this.state.error.bedroomError === "" &&
+      this.state.error.bathroomError === "";
 
     return (
       <Fragment>
         <div className="form-container">
           <h5 className="input-label">Address</h5>
-          <PlacesAutocomplete
-            value={this.state.address}
-            onChange={this.handleAddressChange}
-            onSelect={this.handleSelect}
-          >
-            {({
-              getInputProps,
-              suggestions,
-              getSuggestionItemProps,
-              loading,
-            }) => (
-              <div>
-                <input
-                  {...getInputProps({
-                    placeholder: "Search Places ...",
-                    className: "input-value",
-                  })}
-                />
-                <div className="autocomplete-dropdown-container">
-                  {loading && <div>Loading...</div>}
-                  {suggestions.map((suggestion) => {
-                    const className = suggestion.active
-                      ? "suggestion-active"
-                      : "suggestion";
+          <div>
+            {/* Address Field */}
+            <PlacesAutocomplete
+              value={this.context.address}
+              onChange={this.handleAddressChange}
+            >
+              {({
+                getInputProps,
+                suggestions,
+                getSuggestionItemProps,
+                loading,
+              }) => (
+                <div>
+                  <input
+                    {...getInputProps({
+                      placeholder: "Search Places ...",
+                      className: "input-value",
+                    })}
+                  />
+                  <div className="autocomplete-dropdown-container">
+                    {loading && <div>Loading...</div>}
+                    {suggestions.map((suggestion) => {
+                      const className = suggestion.active
+                        ? "suggestion-active"
+                        : "suggestion";
 
-                    return (
-                      <div
-                        {...getSuggestionItemProps(suggestion, { className })}
-                      >
-                        <span>{suggestion.description}</span>
-                      </div>
-                    );
-                  })}
+                      return (
+                        <div
+                          {...getSuggestionItemProps(suggestion, {
+                            className,
+                          })}
+                        >
+                          <span>{suggestion.description}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            )}
-          </PlacesAutocomplete>
-
-          <div className="error-message">{this.state.error.addressError}</div>
-          <br />
-          <h5 className="input-label">Bedroom</h5>
-          <input
-            type="number"
-            className="input-value"
-            min={0}
-            max={10}
-            onChange={this.handleBedroomChange}
-          />
-          <div className="error-message">{this.state.error.bedroomError}</div>
-          <br />
-          <h5 className="input-label">Bathroom</h5>
-          <input
-            type="number"
-            className="input-value"
-            min={0}
-            max={5}
-            onChange={this.handleBathroomChange}
-          />
-          <div className="error-message">{this.state.error.bathroomError}</div>
-          <br />
-          <h5 className="input-label">Description</h5>
-          <textarea
-            placeholder="description of the property"
-            className="description-value"
-          />
+              )}
+            </PlacesAutocomplete>
+            <div className="error-message">{this.state.error.addressError}</div>
+            <br />
+            {/* Bedroom Field */}
+            <h5 className="input-label">Bedroom</h5>
+            <input
+              type="number"
+              value={this.context.bedroom}
+              onChange={this.handleBedroomChange}
+              className="input-value"
+              min={0}
+              max={10}
+            />
+            <div className="error-message">{this.state.error.bedroomError}</div>
+            <br />
+            {/* Bathroom Field */}
+            <h5 className="input-label">Bathroom</h5>
+            <input
+              type="number"
+              value={this.context.bathroom}
+              onChange={this.handleBathroomChange}
+              className="input-value"
+              min={0}
+              max={5}
+            />
+            <div className="error-message">
+              {this.state.error.bathroomError}
+            </div>
+            <br />
+            {/* Description Value */}
+            <h5 className="input-label">Description</h5>
+            <textarea
+              placeholder="description of the property"
+              value={this.context.description}
+              onChange={this.handleDescriptionChange}
+              className="description-value"
+            />
+          </div>
           <button
             className="submit-btn"
-            disabled={!isEnabled}
+            // disabled={!isEnabled}
             onClick={this.props.submitBtn}
           >
             Submit
@@ -177,3 +184,5 @@ export default class Form extends Component {
     );
   }
 }
+
+Form.contextType = InputContext;

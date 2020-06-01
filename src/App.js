@@ -1,9 +1,10 @@
 import React from "react";
 import Form from "./components/form";
 import ImageUpload from "./components/imageUploader";
-import { CSVReader } from "react-papaparse";
-import "./App.css";
+import CsvReader from "./components/csvReader";
 import { MDBStepper, MDBStep } from "mdbreact";
+import { InputContext } from "./components/inputContext";
+import "./App.css";
 
 class App extends React.Component {
   state = {
@@ -25,8 +26,10 @@ class App extends React.Component {
     });
   };
 
-  handleSubmission = () => {
-    alert("Form submitted!");
+  handleSubmission = (e) => {
+    e.preventDefault();
+    alert("Open you console to see the result");
+    console.log(this.context);
   };
 
   calculateAutofocus = (a) => {
@@ -34,17 +37,6 @@ class App extends React.Component {
       return true;
     }
   };
-
-  handleOnFileLoad = (data) => {
-    // var result = data.map((val) => val.data);
-
-    console.log(data);
-  };
-
-  handleOnError = (err, file, inputElem, reason) => {
-    console.log(err);
-  };
-
   render() {
     return (
       <>
@@ -84,7 +76,6 @@ class App extends React.Component {
             <p>Step 3</p>
           </MDBStep>
         </MDBStepper>
-
         <form className="form">
           <>
             {this.state.formActivePanel1 === 1 && (
@@ -96,13 +87,8 @@ class App extends React.Component {
                   >
                     Add from Scratch
                   </button>
-
-                  <CSVReader
-                    onFileLoad={this.handleOnFileLoad}
-                    onError={this.handleOnError}
-                  >
-                    <span>Uplaod CSV file</span>
-                  </CSVReader>
+                  <p className="header">OR</p>
+                  <CsvReader handleClick={this.handleNextPrevClick(1)(2)} />
                 </div>
               </div>
             )}
@@ -140,5 +126,6 @@ class App extends React.Component {
     );
   }
 }
+App.contextType = InputContext;
 
 export default App;

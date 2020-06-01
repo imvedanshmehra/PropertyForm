@@ -1,4 +1,4 @@
-//
+import { InputContext } from "./inputContext";
 import React from "react";
 import "./imageUploader.css";
 
@@ -6,29 +6,29 @@ export default class ImageUpload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: [],
       preview: null,
     };
     this.addImage = this.addImage.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  addImage() {
-    if (this.state.preview == null) {
-      alert("Upload a image first");
-    } else if (this.state.file.length >= 4) {
-      alert("You can add only 4 images");
+  addImage(e) {
+    e.preventDefault();
+    if (this.context.imageFiles.length >= 4) {
+      alert("You can add upto only 4 images");
     } else {
-      this.setState(
-        {
-          file: [...this.state.file, this.state.preview],
-          preview: null,
-        },
-        () => alert("Image added successfully!")
-      );
+      this.context.handleChange({
+        imageFiles: [...this.context.imageFiles, this.state.preview],
+      });
+      this.setState({
+        preview: null,
+      });
+      alert("Inmage has been uploaded succesfully!");
     }
   }
-  deleteImage() {
+
+  deleteImage(e) {
+    e.preventDefault();
     this.setState({ preview: null });
   }
 
@@ -41,7 +41,9 @@ export default class ImageUpload extends React.Component {
   render() {
     return (
       <div className="container">
-        <p className="counter">Added {this.state.file.length}/4 images</p>
+        <p className="counter">
+          Added {this.context.imageFiles.length}/4 images
+        </p>
         <div className="input-label">
           <input type="file" onChange={this.handleChange} />
         </div>
@@ -74,3 +76,4 @@ export default class ImageUpload extends React.Component {
     );
   }
 }
+ImageUpload.contextType = InputContext;
