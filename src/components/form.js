@@ -174,7 +174,7 @@ export default class Form extends Component {
           </div>
           <button
             className="submit-btn"
-            // disabled={!isEnabled}
+            disabled={!isEnabled}
             onClick={this.props.submitBtn}
           >
             Submit
